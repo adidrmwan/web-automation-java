@@ -21,15 +21,31 @@ public class LoginSteps {
         loginPage.openPage();
     }
 
-    @When("{word} user input email")
+    @When("user input {word} username")
     public void standardUserInputEmail(String user) {
-        String username = userProperties.getUser(user).getUsername();
+        String username;
+        if (user.equals("empty"))
+            username = "";
+        else if (userProperties.getUser(user).getUsername() != null)
+            username = userProperties.getUser(user).getUsername();
+        else
+            username = user;
+
+        System.out.println(username);
+
         loginPage.inputUsername(username);
     }
 
-    @And("{word} user input password")
+    @And("user input {word} password")
     public void standardUserInputPassword(String user) {
-        String password = userProperties.getUser(user).getPassword();
+        String password;
+        if (user.equals("empty"))
+            password = "";
+        else if (userProperties.getUser(user).getPassword() != null)
+            password = userProperties.getUser(user).getPassword();
+        else
+            password = user;
+        System.out.println(password);
         loginPage.inputPassword(password);
     }
 
@@ -42,5 +58,17 @@ public class LoginSteps {
     public void standardUserSeeHomepage() {
         boolean actual = loginPage.isOnHomepage();
         Assert.assertTrue(actual);
+    }
+
+    @Then("user see error toast displayed")
+    public void userSeeErrorToastDisplayed() {
+        boolean actual = loginPage.isErrorToastDisplayed();
+        Assert.assertTrue(actual);
+    }
+
+    @And("user see {string} displayed")
+    public void userSeeDisplayed(String message) {
+        String actual = loginPage.getErrorToastMessage();
+        Assert.assertEquals(message, actual);
     }
 }

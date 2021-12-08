@@ -30,6 +30,7 @@ public class WebDriverPool {
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.setAcceptInsecureCerts(driverWebProperties.isAcceptInsecureCerts());
                 firefoxOptions.setHeadless(driverWebProperties.isHeadless());
+                firefoxOptions.addArguments("--incognito", "--start-maximized");
                 driver = new FirefoxDriver(firefoxOptions);
                 break;
             case "chrome":

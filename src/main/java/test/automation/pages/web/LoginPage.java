@@ -19,11 +19,25 @@ public class LoginPage extends BasePageObject {
         return By.id("user-name");
     }
 
-    private By passwordField() { return By.id("password"); }
+    private By passwordField() {
+        return By.id("password");
+    }
 
-    private By loginButton() { return By.id("login-button"); }
+    private By loginButton() {
+        return By.id("login-button");
+    }
 
-    private By headerTitle() { return By.className("title"); }
+    private By headerTitle() {
+        return By.className("title");
+    }
+
+    private By errorToast() {
+        return By.className("error-message-container");
+    }
+
+    private By errorToastMessage() {
+        return By.xpath("//h3[@data-test='error']");
+    }
 
     public void openPage() {
         goTo(configProperties.getWeb().getBaseUrl());
@@ -43,5 +57,13 @@ public class LoginPage extends BasePageObject {
 
     public boolean isOnHomepage() {
         return waitUntilPresence(headerTitle()).isDisplayed();
+    }
+
+    public boolean isErrorToastDisplayed() {
+        return waitUntilPresence(errorToast()).isDisplayed();
+    }
+
+    public String getErrorToastMessage() {
+        return waitUntilVisible(errorToastMessage()).getText();
     }
 }
