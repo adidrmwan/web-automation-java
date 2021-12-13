@@ -6,12 +6,16 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
+import test.automation.pages.web.InventoryPage;
 import test.automation.pages.web.LoginPage;
 import test.automation.properties.UserProperties;
 
 public class LoginSteps {
     @Autowired
     LoginPage loginPage;
+
+    @Autowired
+    InventoryPage inventoryPage;
 
     @Autowired
     UserProperties userProperties;
@@ -54,10 +58,13 @@ public class LoginSteps {
         loginPage.clickLoginButton();
     }
 
-    @Then("standard user see homepage")
+    @Then("standard user see inventory page")
     public void standardUserSeeHomepage() {
-        boolean actual = loginPage.isOnHomepage();
+        boolean actual = inventoryPage.isOnHomepage();
+        String title = inventoryPage.getTitleText();
+
         Assert.assertTrue(actual);
+        Assert.assertEquals("products", title);
     }
 
     @Then("user see error toast displayed")
